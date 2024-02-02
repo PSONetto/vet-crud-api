@@ -1,0 +1,2 @@
+-- AlterTable
+ALTER TABLE "pet" ALTER COLUMN "sex" SET DATA TYPE CHAR;

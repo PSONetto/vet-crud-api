@@ -1,9 +1,13 @@
-import dotenv from 'dotenv';
+import { Express } from 'express';
 
-import app from './app';
+import { createApp } from './app';
 
-dotenv.config();
+function startServer(app: Express, port: number): void {
+  app.listen(port, () => {
+    console.log(`Server is running at ${port}.`);
+  });
+}
 
 const PORT = parseInt(`${process.env.PORT || 3000}`);
-
-app.listen(PORT, () => console.log(`Server is running at ${PORT}.`));
+const app = createApp();
+startServer(app, PORT);

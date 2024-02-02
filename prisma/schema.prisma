@@ -9,3 +9,65 @@ datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
 }
+
+model Owner {
+  id                     Int      @id @default(autoincrement()) @map("owner_id")
+  createdAt              DateTime @default(now()) @map("created_at")
+  updatedAt              DateTime @updatedAt @map("updated_at")
+  firstName              String   @map("first_name")
+  lastName               String   @map("last_name")
+  emailAddress           String   @unique @map("email_address")
+  phoneNumber            String   @map("phone_number")
+  alternativePhoneNumber String?  @map("alternative_phone_number")
+  preferredContactMethod String   @map("preferred_contact_method")
+  idNumber               String?  @unique @map("id_number")
+  occupation             String?
+  additionalNotes        String?  @map("additional_notes")
+  acceptUpdates          Boolean  @map("accept_updates")
+  acceptMarketing        Boolean  @map("accept_marketing")
+  referralSource         String?  @map("referral_source")
+  treatmentAuthorization Boolean  @map("treatment_authorization")
+
+  address Address?
+
+  pets Pet[]
+
+  @@map("owner")
+}
+
+model Address {
+  id        Int      @id @default(autoincrement()) @map("address_id")
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+  street    String
+  city      String
+  state     String   @db.VarChar(2)
+  zipCode   String?  @map("zip_code") @db.VarChar(9)
+
+  ownerId Int   @unique @map("onwer_id")
+  owner   Owner @relation(fields: [ownerId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  @@map("address")
+}
+
+model Pet {
+  id              Int       @id @default(autoincrement()) @map("pet_id")
+  createdAt       DateTime  @default(now()) @map("created_at")
+  updatedAt       DateTime  @updatedAt @map("updated_at")
+  name            String
+  species         String
+  breed           String?
+  age             Int
+  birthDate       DateTime? @map("birth_date")
+  sex             String    @db.Char()
+  neuteredSpayed  Boolean   @map("neutered_spayed")
+  colorMarks      String    @map("color_marks")
+  weight          Float
+  dietaryNotes    String?   @map("dietary_notes")
+  behavioralNotes String?   @map("behavioral_notes")
+
+  ownerId Int   @unique @map("owner_id")
+  owner   Owner @relation(fields: [ownerId], references: [id], onDelete: Restrict, onUpdate: Cascade)
+
+  @@map("pet")
+}

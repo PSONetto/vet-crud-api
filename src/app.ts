@@ -1,22 +1,37 @@
 import cors from 'cors';
-import express, { Request, Response } from 'express';
+import express, { Express, Request, Response } from 'express';
 import 'express-async-errors';
 import helmet from 'helmet';
 import morgan from 'morgan';
 
-const app = express();
+import ownerRouter from './routers/ownerRouter';
+import petRouter from './routers/petRouter';
 
-app.use(morgan('tiny'));
-app.use(cors());
-app.use(helmet());
-app.use(express.json());
+function configureMiddleware(app: Express): void {
+  app.use(morgan('tiny'));
+  app.use(cors());
+  app.use(helmet());
+  app.use(express.json());
+}
 
-app.use((req: Request, res: Response) => {
-  res.send('Hello World');
-});
+function configureRoutes(app: Express): void {
+  app.get('/', (req: Request, res: Response) => {
+    res.send('Hello World');
+  });
 
-app.use((error: Error, req: Request, res: Response) => {
-  res.status(500).send(error.message);
-});
+  app.use('/owner', ownerRouter);
+  app.use('/pet', petRouter);
 
-export default app;
+  app.use((error: Error, req: Request, res: Response) => {
+    res.status(500).send(error.message);
+  });
+}
+
+export function createApp(): Express {
+  const app = express();
+
+  configureMiddleware(app);
+  configureRoutes(app);
+
+  return app;
+}
