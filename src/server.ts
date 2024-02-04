@@ -8,6 +8,6 @@ function startServer(app: Express, port: number): void {
   });
 }
 
-const PORT = parseInt(`${process.env.PORT || 3000}`);
+const PORT = parseInt(`${process.env.PORT || 8000}`);
 const app = createApp();
 startServer(app, PORT);

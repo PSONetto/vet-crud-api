@@ -9,7 +9,14 @@ import petRouter from './routers/petRouter';
 
 function configureMiddleware(app: Express): void {
   app.use(morgan('tiny'));
-  app.use(cors());
+  app.use(
+    cors({
+      origin: process.env.ALLOW_ORIGIN,
+      methods: ['GET', 'POST', 'PATCH', 'DELETE', 'OPTIONS'],
+      allowedHeaders: ['X-Requested-With', 'content-type'],
+      credentials: true,
+    }),
+  );
   app.use(helmet());
   app.use(express.json());
 }
