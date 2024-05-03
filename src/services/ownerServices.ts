@@ -82,7 +82,7 @@ export async function updateOwner(owner: Owner & Address, id: number) {
       acceptUpdates: owner.acceptUpdates,
       acceptMarketing: owner.acceptMarketing,
       referralSource: owner.referralSource,
-      treatmentAuthorization: owner.treatmentAuthorization,
+      treatmentAuthorization: owner.treatmentAuthorization, 
       address: {
         update: {
           data: {
@@ -92,7 +92,7 @@ export async function updateOwner(owner: Owner & Address, id: number) {
             zipCode: owner.zipCode,
           },
           where: {
-            id,
+            ownerId: id,
           },
         },
       },

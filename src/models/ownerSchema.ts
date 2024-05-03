@@ -5,7 +5,7 @@ export default function validateOwner(owner: Owner, requestType: string) {
   const schema = Joi.object({
     firstName: Joi.string()
       .trim()
-      .pattern(/^[A-Za-zÀ-ÖØ-öø-ÿ]+$/, 'latin letters')
+      .pattern(/^[A-Za-zÀ-ÖØ-öø-ÿ\-' ]+$/)
       .min(2)
       .max(100)
       .alter({
@@ -14,7 +14,7 @@ export default function validateOwner(owner: Owner, requestType: string) {
       }),
     lastName: Joi.string()
       .trim()
-      .pattern(/^[A-Za-zÀ-ÖØ-öø-ÿ]+(?: [A-Za-zÀ-ÖØ-öø-ÿ]+)*$/, 'latin letters')
+      .pattern(/^[A-Za-zÀ-ÖØ-öø-ÿ\-' ]+$/)
       .min(2)
       .max(155)
       .alter({
@@ -32,7 +32,7 @@ export default function validateOwner(owner: Owner, requestType: string) {
       }),
     phoneNumber: Joi.string()
       .trim()
-      .pattern(/^[0-9]+$/)
+      .pattern(/^\d{10}$/)
       .length(10)
       .alter({
         post: (schema) => schema.required(),
@@ -40,8 +40,9 @@ export default function validateOwner(owner: Owner, requestType: string) {
       }),
     alternativePhoneNumber: Joi.string()
       .trim()
-      .pattern(/^[0-9]+$/, 'numbers')
+      .pattern(/^\d{10}$/, 'numbers')
       .length(10)
+      .allow('')
       .optional(),
     preferredContactMethod: Joi.string()
       .trim()
@@ -52,11 +53,11 @@ export default function validateOwner(owner: Owner, requestType: string) {
       }),
     idNumber: Joi.string()
       .trim()
-      .pattern(/^[0-9]+$/, 'numbers')
-      .length(9)
+      .pattern(/^\d{9}$/)
+      .allow('')
       .optional(),
-    occupation: Joi.string().trim().alphanum().optional(),
-    additionalNotes: Joi.string().trim().optional(),
+    occupation: Joi.string().trim().alphanum().allow('').optional(),
+    additionalNotes: Joi.string().trim().allow('').optional(),
     acceptUpdates: Joi.boolean().alter({
       post: (schema) => schema.required(),
       patch: (schema) => schema.optional(),
@@ -72,13 +73,15 @@ export default function validateOwner(owner: Owner, requestType: string) {
     }),
     street: Joi.string()
       .trim()
+      .pattern(
+        /^\d+\s+[\w\s]+\s+\w+?.+(\s+[NSEW]\.)?\s*(?:\b(?:Apartment|Unit|Suite|Room)\s+[A-Za-z0-9#-]+)?$/,
+      )
       .alter({
         post: (schema) => schema.required(),
         patch: (schema) => schema.optional(),
       }),
     city: Joi.string()
       .trim()
-      .pattern(/^[A-Za-zÀ-ÖØ-öø-ÿ]+(?: [A-Za-zÀ-ÖØ-öø-ÿ]+)*$/, 'latin letters')
       .alter({
         post: (schema) => schema.required(),
         patch: (schema) => schema.optional(),
@@ -86,7 +89,6 @@ export default function validateOwner(owner: Owner, requestType: string) {
     state: Joi.string()
       .trim()
       .length(2)
-      .pattern(/^([A-Z])([A-Z])$/, 'uppercase letters')
       .alter({
         post: (schema) => schema.required(),
         patch: (schema) => schema.optional(),
@@ -95,7 +97,8 @@ export default function validateOwner(owner: Owner, requestType: string) {
       .trim()
       .min(5)
       .max(9)
-      .pattern(/^\d{5}(?:\d{4})?$/, '5 digits or 9 digits')
+      .pattern(/^\d{5}(?:\d{4})?$/)
+      .allow('')
       .optional(),
   });
 

@@ -1,0 +1,19 @@
+{
+  "firstName": "John",
+  "lastName": "Doe",
+  "emailAddress": "john.doe@email.com",
+  "phoneNumber": "4445553333",
+  "alternativePhoneNumber": "4445552222",
+  "preferredContactMethod": "Phone",
+  "idNumber": "999999999",
+  "occupation": "Professor",
+  "additionalNotes": "Nothing to mention",
+  "acceptUpdates": true,
+  "acceptMarketing": false,
+  "referralSource": "Google",
+  "treatmentAuthorization": true,
+  "street": "498th Av Roses",
+  "city": "Springfield",
+  "state": "NY",
+  "zipCode": "12345"
+}

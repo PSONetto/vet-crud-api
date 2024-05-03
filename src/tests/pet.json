@@ -1,0 +1,13 @@
+{
+  "name": "Bob",
+  "species": "Dog",
+  "breed": "Yorkshire",
+  "age": 1,
+  "sex": "M",
+  "neuteredSpayed": true,
+  "colorMarks": "golden",
+  "weight": "3.0",
+  "dietaryNotes": "hipoallergenic rations",
+  "behavioralNotes": "very calm",
+  "ownerId": 3
+}
