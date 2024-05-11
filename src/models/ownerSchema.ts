@@ -44,29 +44,11 @@ export default function validateOwner(owner: Owner, requestType: string) {
       .length(10)
       .allow('')
       .optional(),
-    preferredContactMethod: Joi.string()
-      .trim()
-      .alphanum()
-      .alter({
-        post: (schema) => schema.required(),
-        patch: (schema) => schema.optional(),
-      }),
-    idNumber: Joi.string()
-      .trim()
-      .pattern(/^\d{9}$/)
-      .allow('')
-      .optional(),
-    occupation: Joi.string().trim().alphanum().allow('').optional(),
     additionalNotes: Joi.string().trim().allow('').optional(),
     acceptUpdates: Joi.boolean().alter({
       post: (schema) => schema.required(),
       patch: (schema) => schema.optional(),
     }),
-    acceptMarketing: Joi.boolean().alter({
-      post: (schema) => schema.required(),
-      patch: (schema) => schema.optional(),
-    }),
-    referralSource: Joi.string().trim().optional(),
     treatmentAuthorization: Joi.boolean().alter({
       post: (schema) => schema.required(),
       patch: (schema) => schema.optional(),

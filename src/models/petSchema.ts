@@ -29,7 +29,6 @@ export default function validatePet(owner: Owner, requestType: string) {
         post: (schema) => schema.required(),
         patch: (schema) => schema.optional(),
       }),
-    birthDate: Joi.date().max(new Date()).iso().optional(),
     sex: Joi.string()
       .length(1)
       .alter({
@@ -40,12 +39,6 @@ export default function validatePet(owner: Owner, requestType: string) {
       post: (schema) => schema.required(),
       patch: (schema) => schema.optional(),
     }),
-    colorMarks: Joi.string()
-      .trim()
-      .alter({
-        post: (schema) => schema.required(),
-        patch: (schema) => schema.optional(),
-      }),
     weight: Joi.number()
       .precision(2)
       .min(0)
@@ -53,8 +46,7 @@ export default function validatePet(owner: Owner, requestType: string) {
         post: (schema) => schema.required(),
         patch: (schema) => schema.optional(),
       }),
-    dietaryNotes: Joi.string().trim().optional(),
-    behavioralNotes: Joi.string().trim().optional(),
+    additionalNotes: Joi.string().trim().optional(),
     ownerId: Joi.number()
       .min(1)
       .alter({
